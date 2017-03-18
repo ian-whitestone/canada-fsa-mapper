@@ -15,7 +15,7 @@ def getCanadaFSA():
     fsa_list = []
     for f in layer:
         d = dict(f['properties'])
-
+        fsa_d = {}
         if d['PRNAME'] == 'Ontario' and d['CFSAUID'][0] == 'M':
             geom = f['geometry']
 
@@ -26,7 +26,10 @@ def getCanadaFSA():
             elif geom['type'] == 'MultiPolygon':
                 coordinates = [[[list(tuple_coord) for tuple_coord in polygon[0]]] for polygon in geom['coordinates']]
                 geom['coordinates'] = coordinates
-            fsa_list.append(geom)
+
+            fsa_d['geometry'] = geom
+            fsa_d['properties'] = {'province': d['PRNAME'], 'fsa': d['CFSAUID']}
+            fsa_list.append(fsa_d)
     return fsa_list
 
 # getCanadaFSA()

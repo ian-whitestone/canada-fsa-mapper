@@ -58,8 +58,24 @@
 	// 				}
 	// 			}).addTo(mymap);
 
-	var fsa = L.geoJSON().addTo(mymap);
+	// var fsa = L.geoJSON().addTo(mymap);
+	var fsa = L.geoJSON(false, 	{
+			onEachFeature: fsaPopup
+		}).addTo(mymap);
 
+	function fsaPopup(feature, layer) {
+		layer.bindPopup('<center><strong>Province: </strong>' + feature.properties.province +
+		'<br>' + '<strong>FSA: </strong>' + feature.properties.fsa + '<br>'
+	);
+
+		layer.on('mouseover', function(e) {
+			this.openPopup();
+		});
+
+		layer.on('mouseout', function(e) {
+			this.closePopup();
+		});
+	}
 
 	// load markers based on map bounds
 	function loadFSAs() {

@@ -31,9 +31,9 @@ def fsa_api():
 
     fsa_list = []
 
-    for geom in canada_fsa_list:
-        fsa = dict(geometry=geom, type='Feature')
-        fsa['properties'] = dict(prop1=1,colour=4)
+    for fsa_dict in canada_fsa_list:
+        fsa = dict(geometry=fsa_dict['geometry'], type='Feature')
+        fsa['properties'] = fsa_dict['properties']
         fsa_list.append(fsa)
 
     response = jsonify(type='FeatureCollection', features=fsa_list)
