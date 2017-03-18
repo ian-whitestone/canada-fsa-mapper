@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    {% block head %}
+
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>{% block title %}{% endblock %} &mdash; Canada FSA </title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome-4.6.3/css/font-awesome.min.css') }}" />
+
+    <!--jquery-->
+    <script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+
+    <!-- Leaflet CSS -->
+
+    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+
+    <!--leaflet easy button-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
+    <script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
+    <script src="https://use.fontawesome.com/76435eb78f.js"></script>
+
+    <!--font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+    <!--table css-->
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.css">
+
+
+	{% block css %}{% endblock %}
+
+
+    <!-- jQuery library -->
+    <script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>	 -->
+
+    <!-- Bootstrap JavaScript -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+    <!-- table JavaScript -->
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
+
+    <!-- Leaflet Spin JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    {% block javascript %}{% endblock %}
+
+    <!-- CUSTOM STYLE STUFF -->
+    <style type="text/css">
+        a {
+            text-decoration: none !important;
+            color: #b79f56;
+        }
+        a:hover {
+            color:#998341;
+        }
+        .container {
+            width: 100%;
+            padding: 0;
+        }
+        .container-fluid {
+            width: 100%;
+        }
+
+        #points{
+            width:100%;
+            height:100%;
+            position:relative;
+            z-index:100;
+        }
+        #container {
+            position: relative;
+            overflow: hidden;
+            background: #ddd;
+        }
+
+        .map {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layer {
+            position: absolute;
+        }
+
+        .tile {
+            pointer-events: none;
+            position: absolute;
+            width: 256px;
+            height: 256px;
+        }
+        {% block style %}{% endblock %}
+    </style>
+
+    {% endblock %}
+</head>
+
+
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+{% extends "header.html" %}
+
+{% block title %}Explore{% endblock %}
+
+
+
+
+{% block style %}
+h3, p{
+	color:#999999;
+	padding-left: 10px;
+}
+
+.info {
+    padding: 6px 8px;
+	width: 90px;
+    font: Open Sans, 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+}
+
+.legend {
+    line-height: 18px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
+.small {
+	font: 9px Open Sans;
+}
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#mapid {
+    transition: margin-right .5s;
+}
+
+<!-- Loading gif overlay -->
+#overlay {
+    background: #ffffff;
+    color: #666666;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 5000;
+    top: 0;
+    left: 0;
+    float: left;
+    text-align: center;
+    padding-top: 25%;
+}
+{% endblock %}
+
+
+{% block page_header %}
+{% endblock %}
+
+{% block content %}
+<div id="mapid" style="height: 1000px;"></div>
+<script>
+
+	// initialize map and set zoom
+	var mymap = L.map('mapid').setView([43.6329761,-79.3542285], 8);
+
+	// add tiles
+	var map_tl  = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGxpbjE3IiwiYSI6ImNpcmsyMGxudzAwMnlmYm5icXlzYWsxd2IifQ.MUxIcntS8U8rRa41fbPo_Q', {
+		minZoom: 1,
+		maxZoom: 13,
+		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+			'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		id: 'mapbox.streets'
+	});
+
+	map_tl.addTo(mymap);
+
+	function getColor(d) {
+		return d > 30 ? '#550000' :
+			   d > 20 ? '#801515' :
+			   d > 10 ? '#D46A6A' :
+			   d > 3 ? '#FFAAAA' :
+			   			'#A7A7A7';
+	}
+
+	var fsa = L.geoJSON(false, {
+					style: function(feature) {
+						return {
+							fillColor: getColor(feature.properties.colour),
+							weight: 0,
+							fillOpacity: 1,
+							color: '#D3D3D3'
+						}
+					}
+				}).addTo(mymap);
+
+
+	// load markers based on map bounds
+	function loadFSAs() {
+		var bounds = mymap.getBounds();
+		var ne = bounds._northEast;
+		var sw = bounds._southWest;
+
+		console.log(bounds)
+
+		// make call to get geoJSON of all FSAs in view
+		$.ajax({
+			url: 'fsa_api',
+			data: {
+					minlat : sw.lat,
+					minlng : sw.lng,
+					maxlat : ne.lat,
+					maxlng : ne.lng
+				},
+			type: "GET",
+			dataType: 'json',
+			complete: function(data) {
+				fsa.clearLayers();
+
+				fsa.addData(data.responseJSON);
+			}
+		});
+	}
+
+
+	loadFSAs();
+
+</script>
+
+{% endblock %}
