@@ -81,6 +81,7 @@
 			type: "GET",
 			dataType: 'json',
 			complete: function(data) {
+				// shouldn't need to convert this to json .. debug later
 				parsed_data = jQuery.parseJSON(data.responseText)
 				console.log(data)
 				fsa.clearLayers();

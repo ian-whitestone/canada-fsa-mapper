@@ -21,15 +21,15 @@ def getCanadaFSA():
 
             ## convert tuple coordinates to list coordinates
             if geom['type'] == 'Polygon':
-                # print (geom)
-                pass
+                coordinates = [[list(tuple_coord) for tuple_coord in geom['coordinates'][0]]]
+                geom['coordinates'] = coordinates
             elif geom['type'] == 'MultiPolygon':
                 coordinates = [[[list(tuple_coord) for tuple_coord in polygon[0]]] for polygon in geom['coordinates']]
                 geom['coordinates'] = coordinates
             fsa_list.append(geom)
     return fsa_list
 
-# get_fsa()
+# getCanadaFSA()
 
 # with fiona.drivers():
 #     for layername in fiona.listlayers('./pshape'):
