@@ -23,6 +23,15 @@
 <div id="mapid" style="height: 1000px;"></div>
 <script>
 
+	function vertical_resize() {
+		var h = $(window).height() - 90;
+		$('#overlay').height(h);
+		$('#mapid').height(h);
+		$('.sidenav').height(h);
+		//alert($('#mySidenav').height());
+	}
+
+	window.onload = vertical_resize;
 	// initialize map and set zoom
 	var mymap = L.map('mapid').setView([43.6329761,-79.3542285], 8);
 
