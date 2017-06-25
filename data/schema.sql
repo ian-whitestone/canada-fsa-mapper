@@ -45,7 +45,7 @@ UPDATE fsa_multi_polys
 SET center = ST_GeomFromText(center_text)
 ;
 
-CREATE VIEW all_fsa AS (
+CREATE TABLE all_fsa AS (
   SELECT fsa, province, ST_AsGeoJSON(ST_ForceRHR(poly::geometry)) AS geom, ST_AsGeoJSON(center) AS center
   FROM fsa_polys
   UNION ALL
@@ -53,3 +53,10 @@ CREATE VIEW all_fsa AS (
   FROM fsa_multi_polys
 )
 ;
+
+-- create GTA subset
+insert into all_fsa
+select fsa, 'GTA' as province, geom, center
+from all_fsa
+where substring(fsa,1,1) in ('M','L')
+and province='Ontario'
