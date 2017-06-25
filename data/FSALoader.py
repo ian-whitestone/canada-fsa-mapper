@@ -59,9 +59,9 @@ class FSALoader():
         poly_query = "INSERT INTO fsa_polys VALUES (%s, %s, %s, %s)"
         multipoly_query = "INSERT INTO fsa_multi_polys VALUES (%s, %s, %s, %s)"
 
-        dbo.postgres_insert_query(self.conn, poly_query, poly_data,
+        dbo.execute_query(self.conn, poly_query, poly_data,
                                     multiple=True)
-        dbo.postgres_insert_query(self.conn, multipoly_query, multipoly_data,
+        dbo.execute_query(self.conn, multipoly_query, multipoly_data,
                                     multiple=True)
         self.conn.close()
         return
