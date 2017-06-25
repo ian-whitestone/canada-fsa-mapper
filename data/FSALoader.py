@@ -15,7 +15,7 @@ MULTIPOLYGON(((0 0,4 0,4 4,0 4,0 0),(1 1,2 1,2 2,1 2,1 1)), ((-1 -1,-1 -2,-2 -2,
 
 class FSALoader():
     def __init__(self):
-        self.conn = dbo.getPostgresConnection()
+        self.conn = dbo.getConnection()
         self.filepath = "fsa_src/gfsa000b11a_e.shp"
 
     def polygon_str(self, coords):
