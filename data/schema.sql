@@ -45,6 +45,7 @@ UPDATE fsa_multi_polys
 SET center = ST_GeomFromText(center_text)
 ;
 
+-- table for web viz
 CREATE TABLE all_fsa AS (
   SELECT fsa, province, ST_AsGeoJSON(ST_ForceRHR(poly::geometry)) AS geom, ST_AsGeoJSON(center) AS center
   FROM fsa_polys
@@ -60,3 +61,12 @@ select fsa, 'GTA' as province, geom, center
 from all_fsa
 where substring(fsa,1,1) in ('M','L')
 and province='Ontario'
+
+CREATE TABLE all_fsa_geom AS (
+  SELECT fsa, province, poly::geometry AS geom, ST_AsGeoJSON(center) AS center
+  FROM fsa_polys
+  UNION ALL
+  SELECT fsa, province, multi_poly::geometry AS geom, ST_AsGeoJSON(center) AS center
+  FROM fsa_multi_polys
+)
+;
